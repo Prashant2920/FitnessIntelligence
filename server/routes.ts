@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { openai } from "./openai";
+import { getChatResponse } from "./huggingface";
 
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
@@ -82,22 +83,14 @@ export function registerRoutes(app: Express): Server {
   // AI Chatbot
   app.post("/api/chat", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "system",
-          content: "You are a knowledgeable fitness assistant. Provide concise, helpful answers about exercise, nutrition, and health."
-        },
-        {
-          role: "user",
-          content: req.body.message
-        }
-      ]
-    });
 
-    res.json({ message: completion.choices[0].message.content });
+    try {
+      const response = await getChatResponse(req.body.message);
+      res.json({ message: response });
+    } catch (error) {
+      console.error('Chat error:', error);
+      res.status(500).json({ error: 'Failed to generate response' });
+    }
   });
 
   const httpServer = createServer(app);
