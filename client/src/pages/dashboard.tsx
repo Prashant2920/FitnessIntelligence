@@ -4,7 +4,7 @@ import { DietTracker } from "@/components/diet-tracker";
 import { ProgressChart } from "@/components/progress-chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { Activity, Target, Flame } from "lucide-react";
+import { Activity, Target, Flame, Bell, Search, User } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
