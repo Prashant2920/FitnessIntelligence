@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { WorkoutPlanComponent } from "@/components/workout-plan";
 import { DietTracker } from "@/components/diet-tracker";
 import { ProgressChart } from "@/components/progress-chart";
+import { Chatbot } from "@/components/chatbot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { Activity, Target, Flame, BellIcon, SearchIcon, UserIcon, Home, Dumbbell, Apple, MessageSquare } from "lucide-react";
