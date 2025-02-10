@@ -94,28 +94,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Mobile Bottom Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background">
         <div className="flex items-center justify-around p-2">
-          <Link href="/dashboard">
+          <Link href="/chat">
             <Button variant="ghost" size="icon" className="flex flex-col gap-1">
-              <LayoutDashboard className="h-5 w-5" />
-              <span className="text-xs">Dashboard</span>
+              <MessageSquare className="h-5 w-5" />
+              <span className="text-xs">Chatbot</span>
             </Button>
           </Link>
           <Link href="/workouts">
             <Button variant="ghost" size="icon" className="flex flex-col gap-1">
               <Dumbbell className="h-5 w-5" />
-              <span className="text-xs">Workouts</span>
+              <span className="text-xs">Workout</span>
             </Button>
           </Link>
-          <Link href="/chat">
+          <Link href="/diet">
             <Button variant="ghost" size="icon" className="flex flex-col gap-1">
-              <MessageSquare className="h-5 w-5" />
-              <span className="text-xs">Chat</span>
-            </Button>
-          </Link>
-          <Link href="/progress">
-            <Button variant="ghost" size="icon" className="flex flex-col gap-1">
-              <LineChart className="h-5 w-5" />
-              <span className="text-xs">Progress</span>
+              <Apple className="h-5 w-5" />
+              <span className="text-xs">Diet</span>
             </Button>
           </Link>
         </div>
