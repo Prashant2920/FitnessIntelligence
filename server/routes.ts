@@ -1,3 +1,4 @@
+
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
@@ -7,20 +8,20 @@ import { getChatResponse } from "./huggingface";
 import { handleWhatsAppMessage, notifyNewWorkoutPlan } from "./whatsapp-bot";
 import * as express from 'express';
 
-app.post("/api/chat", async (req, res) => {
-  try {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
-    const { message } = req.body;
-    const response = await getChatResponse(message);
-    res.json({ message: response });
-  } catch (error) {
-    console.error('Chat error:', error);
-    res.status(500).json({ error: 'Failed to process chat message' });
-  }
-});
-
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
+
+  app.post("/api/chat", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) return res.sendStatus(401);
+      const { message } = req.body;
+      const response = await getChatResponse(message);
+      res.json({ message: response });
+    } catch (error) {
+      console.error('Chat error:', error);
+      res.status(500).json({ error: 'Failed to process chat message' });
+    }
+  });
 
   // WhatsApp Webhook
   app.post("/api/whatsapp/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
@@ -68,7 +69,6 @@ export function registerRoutes(app: Express): Server {
     res.json(plan);
   });
 
-  // Keep existing routes
   app.get("/api/workout-plans", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     const plans = await storage.getUserWorkoutPlans(req.user.id);
@@ -110,19 +110,6 @@ export function registerRoutes(app: Express): Server {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     const logs = await storage.getUserProgressLogs(req.user.id);
     res.json(logs);
-  });
-
-  // AI Chatbot
-  app.post("/api/chat", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
-
-    try {
-      const response = await getChatResponse(req.body.message);
-      res.json({ message: response });
-    } catch (error) {
-      console.error('Chat error:', error);
-      res.status(500).json({ error: 'Failed to generate response' });
-    }
   });
 
   const httpServer = createServer(app);
