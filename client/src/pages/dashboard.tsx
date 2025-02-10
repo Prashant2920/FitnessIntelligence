@@ -6,7 +6,7 @@ import { DietTracker } from "@/components/diet-tracker";
 import { ProgressChart } from "@/components/progress-chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { Activity, Target, Flame, Bell, Search, User, Home, Dumbbell, Apple, MessageSquare } from "lucide-react";
+import { Activity, Target, Flame, BellIcon, SearchIcon, UserIcon, Home, Dumbbell, Apple, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
@@ -69,14 +69,14 @@ export default function Dashboard() {
           <h1 className="text-xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-4">
             <button className="p-2">
-              <Search className="h-5 w-5" />
+              <SearchIcon className="h-5 w-5" />
             </button>
             <button className="p-2">
-              <Bell className="h-5 w-5" />
+              <BellIcon className="h-5 w-5" />
             </button>
             <Link href="/profile">
               <button className="p-2">
-                <User className="h-5 w-5" />
+                <UserIcon className="h-5 w-5" />
               </button>
             </Link>
           </div>
