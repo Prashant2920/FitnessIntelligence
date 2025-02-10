@@ -4,6 +4,7 @@ import { Dumbbell, Clock, RotateCw } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { WorkoutPlan } from "@shared/schema";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Exercise {
   name: string;
@@ -31,7 +32,39 @@ export function WorkoutPlanComponent() {
   });
 
   if (isLoading) {
-    return <div>Loading workout plans...</div>;
+    return (
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-10 w-40" />
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Skeleton className="h-6 w-32" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[1, 2, 3].map((index) => (
+                <div key={index} className="space-y-2">
+                  <Skeleton className="h-5 w-24" />
+                  {[1, 2].map((exerciseIndex) => (
+                    <div key={exerciseIndex} className="flex items-center justify-between p-2 bg-muted rounded-lg">
+                      <div>
+                        <Skeleton className="h-5 w-32 mb-1" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                      <Skeleton className="h-4 w-4" />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   const activePlan = plans?.find(plan => plan.active);

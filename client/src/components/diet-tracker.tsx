@@ -6,6 +6,7 @@ import { Apple, Plus } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { DietLog } from "@shared/schema";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Meal {
   name: string;
@@ -19,7 +20,7 @@ interface DietLogWithParsedMeals extends Omit<DietLog, 'meals'> {
 export function DietTracker() {
   const [meal, setMeal] = useState<Meal>({ name: "", calories: "" });
 
-  const { data: logs } = useQuery<DietLog[]>({
+  const { data: logs, isLoading } = useQuery<DietLog[]>({
     queryKey: ["/api/diet-logs"]
   });
 
@@ -41,6 +42,41 @@ export function DietTracker() {
   const totalCalories = todaysLogs?.reduce((sum, log) => 
     sum + (log.totalCalories || 0), 0
   ) || 0;
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Apple className="mr-2 h-5 w-5" />
+              Diet Tracker
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center space-x-2 mb-4">
+              <Skeleton className="h-10 flex-1" />
+              <Skeleton className="h-10 w-24" />
+              <Skeleton className="h-10 w-10" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold">Today's Meals</h3>
+              {[1, 2, 3].map((index) => (
+                <div key={index} className="flex justify-between p-2 bg-muted rounded-lg">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+              ))}
+              <div className="flex justify-between font-semibold mt-4">
+                <Skeleton className="h-5 w-24" />
+                <Skeleton className="h-5 w-16" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
