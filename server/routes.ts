@@ -4,14 +4,28 @@ import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { openai } from "./openai";
 import { getChatResponse } from "./huggingface";
+import { handleWhatsAppMessage, notifyNewWorkoutPlan } from "./whatsapp-bot";
+import * as express from 'express';
 
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
 
-  // Workout Plans
+  // WhatsApp Webhook
+  app.post("/api/whatsapp/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
+    try {
+      const message = req.body;
+      await handleWhatsAppMessage(message);
+      res.sendStatus(200);
+    } catch (error) {
+      console.error('WhatsApp webhook error:', error);
+      res.sendStatus(400);
+    }
+  });
+
+  // Workout Plans - Updated to include WhatsApp notification
   app.post("/api/workout-plans", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -34,9 +48,15 @@ export function registerRoutes(app: Express): Server {
       createdAt: new Date().toISOString()
     });
 
+    // Send WhatsApp notification if user has phone number
+    if (req.user.phoneNumber) {
+      await notifyNewWorkoutPlan(req.user.phoneNumber, plan.plan);
+    }
+
     res.json(plan);
   });
 
+  // Keep existing routes
   app.get("/api/workout-plans", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     const plans = await storage.getUserWorkoutPlans(req.user.id);
