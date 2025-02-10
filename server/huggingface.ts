@@ -17,6 +17,10 @@ If a question is beyond your scope or could be medically sensitive, advise consu
 
 export async function getChatResponse(userMessage: string) {
   try {
+    if (!process.env.HUGGINGFACE_API_KEY) {
+      return "Sorry, the chat service is not properly configured. Please try again later.";
+    }
+
     const prompt = `<|system|>${SYSTEM_PROMPT}</s>
 <|user|>${userMessage}</s>
 <|assistant|>`;
@@ -33,6 +37,9 @@ export async function getChatResponse(userMessage: string) {
         num_return_sequences: 1,
         stop: ["</s>", "<|user|>", "<|system|>"]
       }
+    }).catch(error => {
+      console.error("Hugging Face API error:", error);
+      throw new Error("Failed to generate response from AI model");
     });
 
     // Clean up the response
