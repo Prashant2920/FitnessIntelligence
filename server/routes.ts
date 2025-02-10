@@ -7,6 +7,18 @@ import { getChatResponse } from "./huggingface";
 import { handleWhatsAppMessage, notifyNewWorkoutPlan } from "./whatsapp-bot";
 import * as express from 'express';
 
+app.post("/api/chat", async (req, res) => {
+  try {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const { message } = req.body;
+    const response = await getChatResponse(message);
+    res.json({ message: response });
+  } catch (error) {
+    console.error('Chat error:', error);
+    res.status(500).json({ error: 'Failed to process chat message' });
+  }
+});
+
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
 

@@ -55,7 +55,7 @@ export default function Dashboard() {
       case 'diet':
         return <DietTracker />;
       case 'chat':
-        return <div className="p-4">Chat interface coming soon...</div>;
+        return <Chatbot />;
       default:
         return null;
     }
