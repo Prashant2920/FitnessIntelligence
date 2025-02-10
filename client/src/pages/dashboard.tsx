@@ -13,10 +13,10 @@ export default function Dashboard() {
     <Layout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Dashboard</h1>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
@@ -25,7 +25,7 @@ export default function Dashboard() {
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{user?.fitnessGoal || "Not set"}</div>
+              <div className="text-lg md:text-2xl font-bold truncate">{user?.fitnessGoal || "Not set"}</div>
             </CardContent>
           </Card>
           <Card>
@@ -36,10 +36,10 @@ export default function Dashboard() {
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{user?.activityLevel || "Not set"}</div>
+              <div className="text-lg md:text-2xl font-bold truncate">{user?.activityLevel || "Not set"}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="sm:col-span-2 lg:col-span-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Daily Calories
@@ -47,12 +47,12 @@ export default function Dashboard() {
               <Flame className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">2000 kcal</div>
+              <div className="text-lg md:text-2xl font-bold">2000 kcal</div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
           <div className="space-y-6">
             <WorkoutPlanComponent />
             <DietTracker />
