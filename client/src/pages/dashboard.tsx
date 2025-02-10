@@ -11,9 +11,27 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="space-y-6">
+      {/* Mobile Top Bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b p-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl md:text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-xl font-bold">Dashboard</h1>
+          <div className="flex items-center gap-4">
+            <button className="p-2">
+              <Bell className="h-5 w-5" />
+            </button>
+            <button className="p-2">
+              <Search className="h-5 w-5" />
+            </button>
+            <button className="p-2">
+              <User className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-6 mb-20 md:mb-0 mt-16 md:mt-0">
+        <div className="flex items-center justify-between md:block">
+          <h1 className="text-2xl md:text-3xl font-bold hidden md:block">Dashboard</h1>
         </div>
 
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

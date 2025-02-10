@@ -91,22 +91,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </ScrollArea>
       </aside>
 
-      {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex items-center justify-between p-4">
-          <h1 className="text-xl font-bold text-primary">FitAI</h1>
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0">
-              <ScrollArea className="h-full py-6 px-4">
-                <NavContent />
-              </ScrollArea>
-            </SheetContent>
-          </Sheet>
+      {/* Mobile Bottom Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background">
+        <div className="flex items-center justify-around p-2">
+          <Link href="/dashboard">
+            <Button variant="ghost" size="icon" className="flex flex-col gap-1">
+              <LayoutDashboard className="h-5 w-5" />
+              <span className="text-xs">Dashboard</span>
+            </Button>
+          </Link>
+          <Link href="/workouts">
+            <Button variant="ghost" size="icon" className="flex flex-col gap-1">
+              <Dumbbell className="h-5 w-5" />
+              <span className="text-xs">Workouts</span>
+            </Button>
+          </Link>
+          <Link href="/chat">
+            <Button variant="ghost" size="icon" className="flex flex-col gap-1">
+              <MessageSquare className="h-5 w-5" />
+              <span className="text-xs">Chat</span>
+            </Button>
+          </Link>
+          <Link href="/progress">
+            <Button variant="ghost" size="icon" className="flex flex-col gap-1">
+              <LineChart className="h-5 w-5" />
+              <span className="text-xs">Progress</span>
+            </Button>
+          </Link>
         </div>
       </div>
 
