@@ -9,6 +9,7 @@ import AuthPage from "@/pages/auth-page";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import ChatPage from "@/pages/chat";
+import WorkoutPage from "@/pages/workout-page";
 import { ProtectedRoute } from "./lib/protected-route";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <ProtectedRoute path="/dashboard" component={Dashboard} />
       <ProtectedRoute path="/profile" component={Profile} />
       <ProtectedRoute path="/chat" component={ChatPage} />
+      <ProtectedRoute path="/workouts" component={WorkoutPage} />
       <Route component={NotFound} />
     </Switch>
   );
