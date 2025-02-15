@@ -4,7 +4,8 @@ import { z } from "zod";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
+  username: text("username").unique(),
+  email: text("email").notNull().unique(), // ✅ Added email column
   password: text("password").notNull(),
   weight: integer("weight"),
   height: integer("height"),
@@ -12,6 +13,7 @@ export const users = pgTable("users", {
   activityLevel: text("activity_level"),
   preferences: json("preferences").default({})
 });
+
 
 export const workoutPlans = pgTable("workout_plans", {
   id: serial("id").primaryKey(),
@@ -41,6 +43,7 @@ export const progressLogs = pgTable("progress_logs", {
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
+  email: true,
   weight: true,
   height: true,
   fitnessGoal: true,

@@ -14,10 +14,12 @@ interface Message {
 }
 
 export function Chatbot() {
-  const [messages, setMessages] = useState<Message[]>([{
-    content: "Hello! I'm your AI fitness assistant. How can I help you today?",
-    isUser: false
-  }]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      content: "Hello! I'm your AI fitness assistant. How can I help you today?",
+      isUser: false,
+    },
+  ]);
   const [input, setInput] = useState("");
   const { toast } = useToast();
 
@@ -31,7 +33,7 @@ export function Chatbot() {
       return data;
     },
     onSuccess: (data) => {
-      setMessages(prev => [...prev, { content: data.message, isUser: false }]);
+      setMessages((prev) => [...prev, { content: data.message, isUser: false }]);
     },
     onError: (error: Error) => {
       toast({
@@ -39,13 +41,13 @@ export function Chatbot() {
         description: error.message,
         variant: "destructive",
       });
-    }
+    },
   });
 
   const handleSend = () => {
     if (!input.trim()) return;
 
-    setMessages(prev => [...prev, { content: input, isUser: true }]);
+    setMessages((prev) => [...prev, { content: input, isUser: true }]);
     sendMessageMutation.mutate(input);
     setInput("");
   };
@@ -67,13 +69,11 @@ export function Chatbot() {
                 className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`
-                    max-w-[85%] md:max-w-[80%] rounded-lg p-3
-                    ${message.isUser 
-                      ? "bg-primary text-primary-foreground" 
+                  className={`max-w-[85%] md:max-w-[80%] rounded-lg p-3 ${
+                    message.isUser
+                      ? "bg-primary text-primary-foreground"
                       : "bg-muted"
-                    }
-                  `}
+                  }`}
                 >
                   {message.content}
                 </div>
